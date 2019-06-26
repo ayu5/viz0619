@@ -1,0 +1,95 @@
+---
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(ggrepel)
+```
+
+```{r}
+Happy_GDP <- function(data, countries) {
+  ix_label = which(data$Country %in% countries)
+  rownames(data) <- data$Country
+  data$Country <- ""
+  data$Country[ix_label] <- rownames(data)[ix_label]
+  
+  ggplot(data, aes(x=Happiness.Score, y=Economy..GDP.per.Capita., label = Country)) + 
+  geom_point(color = ifelse(df2015$Country == "", "grey50", "red")) +
+  geom_text_repel()
+}
+```
+
+```{r}
+df2015 = read.csv("2015.csv")
+rownames(df2015) <- df2015$Country
+happytop10 = rownames(df2016[df2015$Happiness.Rank < 11 | df2015$Happiness.Rank > 147 ,])
+countries = c("United States", happytop10)
+
+ix_label = which(df2015$Country %in% countries)
+
+df2015$Country <- ""
+df2015$Country[ix_label] <- rownames(df2015)[ix_label]
+
+ggplot(df2015, aes(x=Happiness.Score, y=Economy..GDP.per.Capita., label = Country)) +
+  geom_point(color = ifelse(df2015$Country == "", "grey50", "red")) +
+  geom_text_repel(point.padding = NA) +
+  theme_classic() + 
+  labs(title = "Happiness Score and GDP (2015)", x = "Happiness Score", y = "GDP per Capita", caption = "Source: Kaggle")
+
+```
+```{r}
+df2016 = read.csv("2016.csv")
+rownames(df2016) <- df2016$Country
+happytop10 = rownames(df2016[df2016$Happiness.Rank < 11 | df2016$Happiness.Rank > 147 ,])
+countries = c("United States", happytop10)
+
+ix_label = which(df2016$Country %in% countries)
+
+df2016$Country <- ""
+df2016$Country[ix_label] <- rownames(df2016)[ix_label]
+
+ggplot(df2016, aes(x=Happiness.Score, y=Economy..GDP.per.Capita., label = Country)) +
+  geom_point(color = ifelse(df2016$Country == "", "grey50", "red")) +
+  geom_text_repel(point.padding = NA) +
+  theme_classic() + 
+  labs(title = "Happiness Score and GDP (2016)", x = "Happiness Score", y = "GDP per Capita", caption = "Source: Kaggle")
+```
+
+```{r}
+df2017 = read.csv("2017.csv")
+rownames(df2017) <- df2017$Country
+happytop10 = rownames(df2017[df2017$Happiness.Rank < 11 | df2017$Happiness.Rank > 147 ,])
+countries = c("United States", happytop10)
+
+ix_label = which(df2017$Country %in% countries)
+
+df2017$Country <- ""
+df2017$Country[ix_label] <- rownames(df2017)[ix_label]
+
+ggplot(df2017, aes(x=Happiness.Score, y=Economy..GDP.per.Capita., label = Country)) +
+  geom_point(color = ifelse(df2017$Country == "", "grey50", "red")) +
+  geom_text_repel(point.padding = NA) +
+  theme_classic() + 
+  labs(title = "Happiness Score and GDP (2017)", x = "Happiness Score", y = "GDP per Capita", caption = "Source: Kaggle")
+
+
+```
+
+
+
+```{r}
+df2015$Country
+```
+
+```{r}
+df2016[df2016$Happiness.Rank < 11 | df2016$Happiness.Rank > 147 ,]
+```
+
+
+
